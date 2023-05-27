@@ -1,23 +1,54 @@
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import {isAuth} from "./utils/auth";
+import {Register} from "./pages/Register";
+import {Login} from "./pages/Login";
+import {Main} from "./pages/Main";
 
 function App() {
+  const AuthRoute = ({ children }) => {
+    if (isAuth()) {
+      return children
+    }
+    return <Navigate to='/login' />
+  }
+
+  const UnAuthRoute = ({ children }) => {
+    if (isAuth()) {
+      return <Navigate to='/' />
+    }
+    return children
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route
+            path='register'
+            element={
+              <UnAuthRoute>
+                <Register />
+              </UnAuthRoute>
+            }
+        />
+        <Route
+            path='login'
+            element={
+              <UnAuthRoute>
+                <Login />
+              </UnAuthRoute>
+            }
+        />
+        <Route
+            path='/'
+            element={
+              <AuthRoute>
+                <Main />
+              </AuthRoute>
+            }
+        />
+      </Routes>
     </div>
   );
 }
