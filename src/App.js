@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import {isAuth} from "./utils/auth";
 import {Register} from "./pages/Register";
 import {Login} from "./pages/Login";
-import {Main} from "./pages/Main";
+import {Game} from "./pages/Main";
 
 function App() {
   const AuthRoute = ({ children }) => {
@@ -44,7 +44,7 @@ function App() {
             path='/'
             element={
               <AuthRoute>
-                <Main />
+                <Game />
               </AuthRoute>
             }
         />

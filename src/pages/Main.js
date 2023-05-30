@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from "react";
+import {Environment} from "../gameEngine/Environment";
 
-export const Main = () => {
+export const Game = () => {
     const canvasRef = useRef(null);
 
     const [canvas, setCanvas] = useState(null)
@@ -22,6 +23,15 @@ export const Main = () => {
     },[canvas]);
 
     useEffect(() => {
+        if (context) {
+            const env = new Environment();
+            env.setCanvas(canvas);
+            env.setContext(context);
+            env.init();
+        }
+    }, [context, canvas]);
+
+    useEffect(() => {
         const handleResize = () => {
             if (canvas) {
                 canvas.width = window.innerWidth;
@@ -36,7 +46,7 @@ export const Main = () => {
 
     return (
         <div>
-            <h1>MAIN</h1>
+            <h1>GAME</h1>
             <canvas ref={canvasRef}></canvas>
         </div>
     );
