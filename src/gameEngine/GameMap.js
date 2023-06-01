@@ -1,3 +1,5 @@
+import {withGrid} from "./utils";
+
 export class GameMap {
     gameObjects;
     lowerPicture;
@@ -17,11 +19,19 @@ export class GameMap {
         this.upperPicture.src = imageSource;
     }
 
-    drawLower(context) {
-        context && this.lowerPicture && context.drawImage(this.lowerPicture, 0, 0);
+    drawLower(context, cameraPerson) {
+        context && this.lowerPicture && context.drawImage(
+            this.lowerPicture,
+            withGrid(10) - cameraPerson.x,
+            withGrid(6) - cameraPerson.y
+        );
     }
 
-    drawUpper(context) {
-        context.drawImage(this.upperPicture, 0, 0);
+    drawUpper(context, cameraPerson) {
+        context.drawImage(
+            this.upperPicture,
+            withGrid(10) - cameraPerson.x,
+            withGrid(6) - cameraPerson.y
+        );
     }
 }

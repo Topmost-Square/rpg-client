@@ -15,7 +15,7 @@ export class Sprite {
     currentAnimation = 'walk-down';
     currentAnimationFrame = 0;
 
-    animationFrameLimit = 16;
+    animationFrameLimit = 8;
     animationFrameProgress = this.animationFrameLimit;
 
     image;
@@ -73,9 +73,9 @@ export class Sprite {
         }
     }
 
-    draw(context) {
-        const x = this.gameObject.x - 8;
-        const y = this.gameObject.y - 18;
+    draw(context, cameraPerson) {
+        const x = this.gameObject.x - 8 + withGrid(10) - cameraPerson.x;
+        const y = this.gameObject.y - 18 + withGrid(6) - cameraPerson.y;
 
         const [frameX, frameY] = this.frame;
 

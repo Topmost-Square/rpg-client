@@ -21,7 +21,7 @@ export class Person extends GameObject {
 
         if (this.isControlled && this.movingProgressRemaining === 0 && direction) {
             this.direction = direction;
-            this.movingProgressRemaining = 16
+            this.movingProgressRemaining = 16;
         }
     }
 

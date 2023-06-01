@@ -20,16 +20,23 @@ export class Environment {
         const step = () => {
             this.context.clearRect(0,0, this.canvas.width, this.canvas.height);
 
-            this.context && this.map.drawLower(this.context);
+            const cameraPerson = this.map.gameObjects.rickert;
 
             this.context && Object
                 .values(this.map.gameObjects)
                 .forEach(object => {
                     object.update(this.input.direction);
-                    object.sprite.draw(this.context)
                 });
 
-            // this.context && this.map.drawUpper(this.context);
+            this.context && this.map.drawLower(this.context, cameraPerson);
+
+            this.context && Object
+                .values(this.map.gameObjects)
+                .forEach(object => {
+                    object.sprite.draw(this.context, cameraPerson)
+                });
+
+            // this.context && this.map.drawUpper(this.context, cameraPerson);
 
             requestAnimationFrame(() => step())
         }
