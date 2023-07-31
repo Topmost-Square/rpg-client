@@ -1,9 +1,15 @@
-import {withGrid} from "./utils";
+import {nextPosition, withGrid} from "./utils";
 
 export class GameMap {
     gameObjects;
     lowerPicture;
     upperPicture;
+
+    walls = {};
+
+    setWalls(walls) {
+        this.walls = walls;
+    }
 
     setGameObjects(gameObjects) {
         this.gameObjects = gameObjects
@@ -33,5 +39,13 @@ export class GameMap {
             withGrid(10) - cameraPerson.x,
             withGrid(6) - cameraPerson.y
         );
+    }
+
+    isSpaceTaken(currentX, currentY, direction) {
+        const {x,y} = nextPosition(currentX, currentY, direction);
+
+        console.log(x,y, 'NEXT')
+
+        return this.walls[`${x},${y}`] || false;
     }
 }

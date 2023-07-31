@@ -25,7 +25,10 @@ export class Environment {
             this.context && Object
                 .values(this.map.gameObjects)
                 .forEach(object => {
-                    object.update(this.input.direction);
+                    object.update(
+                        this.input.direction,
+                        this.map
+                    );
                 });
 
             this.context && this.map.drawLower(this.context, cameraPerson);
@@ -35,6 +38,8 @@ export class Environment {
                 .forEach(object => {
                     object.sprite.draw(this.context, cameraPerson)
                 });
+
+            this.context && this.map.drawUpper(this.context, cameraPerson);
 
             // this.context && this.map.drawUpper(this.context, cameraPerson);
 
@@ -47,7 +52,11 @@ export class Environment {
     init() {
         this.map = new GameMap();
         this.map.setLower(FirstMap.lowerPicture);
+        this.map.setUpper(FirstMap.upperPicture);
         this.map.setGameObjects(FirstMap.gameObjects);
+        this.map.setWalls(FirstMap.walls);
+
+        console.log(this.map.walls, 'walls')
 
         this.input = new Input();
         this.input.init();

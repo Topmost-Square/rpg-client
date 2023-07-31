@@ -15,12 +15,17 @@ export class Person extends GameObject {
         this.isControlled = isControlled;
     }
 
-    update(direction) {
+    update(direction, map) {
         this.updatePosition();
         this.updateSprite(direction);
 
         if (this.isControlled && this.movingProgressRemaining === 0 && direction) {
             this.direction = direction;
+
+            console.log([this.x, this.y], 'coordinates')
+            //
+            console.log(map.isSpaceTaken(this.x, this.y, this.direction), 'space taken');
+
             this.movingProgressRemaining = 16;
         }
     }
