@@ -27,3 +27,10 @@ export const nextPosition = (initX, initY, direction) => {
 
     return {x,y};
 }
+
+export const emitEvent = (name, detail) => {
+    const event = new CustomEvent(name, {
+        detail
+    });
+    document.dispatchEvent(event);
+}

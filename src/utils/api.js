@@ -3,8 +3,6 @@ import {getToken} from "./auth";
 export const call = async (route, method, data) => {
     const url = `${process.env.REACT_APP_URI}${route}`;
 
-    console.log(url, 'URL')
-
     const token = getToken() || '';
     const headers = {
         "Content-Type": "application/json",

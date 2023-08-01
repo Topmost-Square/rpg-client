@@ -1,4 +1,6 @@
 import rickertImg from './images/rickert-sprite.png';
+import npc1Img from './images/npc1.png';
+import npc2Img from './images/npc2.png';
 import lowerPicture from './images/map-1-bottom.png';
 import upperPicture from './images/map-1-top.png';
 import {Person} from "./Person";
@@ -10,17 +12,36 @@ rickert.setY(withGrid(5));
 rickert.setSprite(rickertImg);
 rickert.setIsControlled(true);
 
-const npc = new Person();
-npc.setX(withGrid(10));
-npc.setY(withGrid(10));
-npc.setSprite(rickertImg);
+const npc1 = new Person();
+npc1.setX(withGrid(10));
+npc1.setY(withGrid(10));
+npc1.setSprite(npc1Img);
+npc1.setBehaviourLoop([
+    { type: 'stand', direction: 'left', time: 800},
+    { type: 'stand', direction: 'up', time: 800},
+    { type: 'stand', direction: 'right', time: 1200},
+    { type: 'stand', direction: 'up', time: 300},
+])
+
+const npc2 = new Person();
+npc2.setX(withGrid(30));
+npc2.setY(withGrid(8));
+npc2.setSprite(npc2Img);
+npc2.setBehaviourLoop([
+    { type: 'walk', direction: 'left'},
+    { type: 'stand', direction: 'up', time: 800},
+    { type: 'walk', direction: 'up'},
+    { type: 'walk', direction: 'right'},
+    { type: 'walk', direction: 'down'},
+])
 
 export const FirstMap = {
     lowerPicture,
     upperPicture,
     gameObjects: {
         rickert,
-        npc
+        npc1,
+        npc2
     },
     walls: {
         [asGridCoordinate(0,0)]: true,

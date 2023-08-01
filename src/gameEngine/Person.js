@@ -1,4 +1,5 @@
 import {GameObject} from "./GameObject";
+import {emitEvent} from "./utils";
 
 export class Person extends GameObject {
     movingProgressRemaining = 0;
@@ -44,6 +45,14 @@ export class Person extends GameObject {
         // x or y         1 or -1
         this[property] += change;
         this.movingProgressRemaining -= 1;
+
+        if (this.movingProgressRemaining === 0) {
+            // finished walking
+            // fire event to use externally
+            emitEvent('PersonWalkingComplete', {
+                whoId: this.id
+            });
+        }
     }
 
     updateSprite() {

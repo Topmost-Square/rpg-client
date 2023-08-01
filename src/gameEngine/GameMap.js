@@ -7,6 +7,12 @@ export class GameMap {
 
     walls = {};
 
+    isCutscenePlaying = false;
+
+    setIsCutscene(isCutscenePlaying) {
+        this.isCutscenePlaying = isCutscenePlaying;
+    }
+
     setWalls(walls) {
         this.walls = walls;
     }
@@ -43,18 +49,21 @@ export class GameMap {
 
     isSpaceTaken(currentX, currentY, direction) {
         const {x,y} = nextPosition(currentX, currentY, direction);
-
-        console.log(x,y, 'NEXT')
-
         return this.walls[`${x},${y}`] || false;
     }
 
     mountObjects() {
-        Object.values(this.gameObjects).forEach(o => {
+        Object.keys(this.gameObjects).forEach(key => {
+
+            let object = this.gameObjects[key];
+
+            object.id = key;
+
+
             //TODO: determine if this object should really be mounted
             // for example if there's some items,
             // and we picked that already we won't mount it
-            o.mount(this)
+                object.mount(this)
         });
     }
 
