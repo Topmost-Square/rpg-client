@@ -25,6 +25,7 @@ export class Person extends GameObject {
 
             map.moveWall(this.x, this.y, this.direction);
             this.movingProgressRemaining = 16;
+            this.updateSprite(direction);
         }
     }
 
