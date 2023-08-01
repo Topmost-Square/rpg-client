@@ -1,4 +1,5 @@
 import {nextPosition, withGrid} from "./utils";
+import {EventHandler} from "./EventHandler";
 
 export class GameMap {
     gameObjects;
@@ -9,8 +10,18 @@ export class GameMap {
 
     isCutscenePlaying = false;
 
-    setIsCutscene(isCutscenePlaying) {
-        this.isCutscenePlaying = isCutscenePlaying;
+    async startCutscene(events) {
+        this.isCutscenePlaying = true;
+
+        for (let i = 0; i < events.length; i++) {
+            const eventHandler = new EventHandler();
+            eventHandler.setMap(this);
+            eventHandler.setEvent(events[i]);
+            await eventHandler.init();
+        }
+
+
+        this.isCutscenePlaying = false;
     }
 
     setWalls(walls) {
@@ -66,6 +77,8 @@ export class GameMap {
                 object.mount(this)
         });
     }
+
+
 
     addWall(x,y) {
         this.walls[`${x},${y}`] = true;

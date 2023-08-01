@@ -47,7 +47,7 @@ export class Person extends GameObject {
         if (this.movingProgressRemaining) {
             this.updatePosition();
         } else {
-            if (this.isControlled && direction) {
+            if (!map.isCutscenePlaying && this.isControlled && direction) {
                 this.startBehavior('walk', map, direction);
             }
             this.updateSprite(direction);

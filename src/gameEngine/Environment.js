@@ -66,5 +66,18 @@ export class Environment {
         this.input.init();
 
         this.startGameLoop();
+
+        this.map.startCutscene([
+            { who: "rickert", type: 'walk', direction: 'down'},
+            { who: "rickert", type: 'walk', direction: 'down'},
+            { who: "rickert", type: 'walk', direction: 'down'},
+            { who: "rickert", type: 'walk', direction: 'down'},
+            { who: "npc1", type: 'walk', direction: 'left'},
+            { who: "npc1", type: 'walk', direction: 'left'},
+            { who: "npc1", type: 'walk', direction: 'left'},
+            { who: "npc1", type: 'walk', direction: 'left'},
+            { who: "npc1", type: 'walk', direction: 'left'},
+            { who: "npc1", type: 'stand', direction: 'up', time: 800},
+        ])
     }
 }
