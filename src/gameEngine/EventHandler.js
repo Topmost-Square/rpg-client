@@ -11,7 +11,20 @@ export class EventHandler {
     }
 
     stand(resolve) {
+        const who = this.map.gameObjects[this.event.who];
+        who.startBehavior(this.event.type, this.map, this.event.direction, this.event.time);
 
+        const completeHandler = e => {
+            if (e.detail.whoId === this.event.who) {
+                document.removeEventListener(
+                    'PersonStandComplete',
+                    completeHandler
+                );
+                resolve();
+            }
+        }
+
+        document.addEventListener('PersonStandComplete', completeHandler)
     }
 
     walk(resolve) {

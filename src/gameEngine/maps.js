@@ -29,7 +29,7 @@ npc2.setY(withGrid(8));
 npc2.setSprite(npc2Img);
 npc2.setBehaviourLoop([
     { type: 'walk', direction: 'left'},
-    // { type: 'stand', direction: 'up', time: 800},
+    { type: 'stand', direction: 'up', time: 800},
     { type: 'walk', direction: 'up'},
     { type: 'walk', direction: 'right'},
     { type: 'walk', direction: 'down'},

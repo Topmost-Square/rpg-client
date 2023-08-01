@@ -16,7 +16,7 @@ export class Person extends GameObject {
         this.isControlled = isControlled;
     }
 
-    startBehavior(type, map, direction) {
+    startBehavior(type, map, direction, time = 100) {
         this.direction = direction;
         if (type === 'walk') {
             if (map.isSpaceTaken(this.x, this.y, this.direction)) {
@@ -26,6 +26,14 @@ export class Person extends GameObject {
             map.moveWall(this.x, this.y, this.direction);
             this.movingProgressRemaining = 16;
             this.updateSprite(direction);
+        }
+
+        if (type === 'stand') {
+            setTimeout(() => {
+                emitEvent('PersonStandComplete', {
+                    whoId: this.id
+                });
+            }, time);
         }
     }
 
