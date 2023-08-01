@@ -33,8 +33,13 @@ export class Environment {
 
             this.context && this.map.drawLower(this.context, cameraPerson);
 
+            // draw game objects
             this.context && Object
                 .values(this.map.gameObjects)
+                // sort by Y coordinates
+                // so object with bigger y (placed lower)
+                // drawn above ones place upper
+                .sort((a,b) => a.y - b.y)
                 .forEach(object => {
                     object.sprite.draw(this.context, cameraPerson)
                 });
