@@ -12,7 +12,13 @@ export class EventHandler {
 
     stand(resolve) {
         const who = this.map.gameObjects[this.event.who];
-        who.startBehavior(this.event.type, this.map, this.event.direction, this.event.time);
+        who.startBehavior(
+            this.event.type,
+            this.map,
+            this.event.direction,
+            true,
+            this.event.time,
+            );
 
         const completeHandler = e => {
             if (e.detail.whoId === this.event.who) {
@@ -29,7 +35,12 @@ export class EventHandler {
 
     walk(resolve) {
         const who = this.map.gameObjects[this.event.who];
-        who.startBehavior(this.event.type, this.map, this.event.direction);
+        who.startBehavior(
+            this.event.type,
+            this.map,
+            this.event.direction,
+            true
+        );
 
         const completeHandler = e => {
             if (e.detail.whoId === this.event.who) {

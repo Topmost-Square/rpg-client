@@ -16,10 +16,16 @@ export class Person extends GameObject {
         this.isControlled = isControlled;
     }
 
-    startBehavior(type, map, direction, time = 100) {
+    startBehavior(type, map, direction, retry = false, time = 100) {
         this.direction = direction;
         if (type === 'walk') {
+            // stop here if space is not free
             if (map.isSpaceTaken(this.x, this.y, this.direction)) {
+
+                retry && setTimeout(() => {
+                    this.startBehavior(type, map, direction, retry)
+                }, 10);
+
                 return
             }
 
