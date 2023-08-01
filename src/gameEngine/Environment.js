@@ -49,12 +49,13 @@ export class Environment {
 
     init() {
         this.map = new GameMap();
+
         this.map.setLower(FirstMap.lowerPicture);
         this.map.setUpper(FirstMap.upperPicture);
         this.map.setGameObjects(FirstMap.gameObjects);
         this.map.setWalls(FirstMap.walls);
 
-        console.log(this.map.walls, 'walls')
+        this.map.mountObjects();
 
         this.input = new Input();
         this.input.init();

@@ -5,6 +5,12 @@ export class GameObject {
     y = 0;
     sprite;
     direction = 'down';
+    isMounted = false;
+
+    mount(map) {
+        this.isMounted = true;
+        map.addWall(this.x, this.y);
+    }
 
     setDirection(direction) {
         this.direction = direction;

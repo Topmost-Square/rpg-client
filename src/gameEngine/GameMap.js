@@ -48,4 +48,27 @@ export class GameMap {
 
         return this.walls[`${x},${y}`] || false;
     }
+
+    mountObjects() {
+        Object.values(this.gameObjects).forEach(o => {
+            //TODO: determine if this object should really be mounted
+            // for example if there's some items,
+            // and we picked that already we won't mount it
+            o.mount(this)
+        });
+    }
+
+    addWall(x,y) {
+        this.walls[`${x},${y}`] = true;
+    }
+
+    removeWall(x,y) {
+        delete this.walls[`${x},${y}`];
+    }
+
+    moveWall(wasX, wasY, direction) {
+        this.removeWall(wasX, wasY);
+        const {x,y} = nextPosition(wasX, wasY, direction);
+        this.addWall(x,y);
+    }
 }
