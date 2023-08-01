@@ -21,6 +21,8 @@ export class Person extends GameObject {
             if (map.isSpaceTaken(this.x, this.y, this.direction)) {
                 return
             }
+
+            map.moveWall(this.x, this.y, this.direction);
             this.movingProgressRemaining = 16;
         }
     }
