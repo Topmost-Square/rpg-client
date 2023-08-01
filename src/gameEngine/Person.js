@@ -15,39 +15,41 @@ export class Person extends GameObject {
         this.isControlled = isControlled;
     }
 
-    update(direction, map) {
-        this.updatePosition();
-        this.updateSprite(direction);
-
-        if (this.isControlled && this.movingProgressRemaining === 0 && direction) {
-            this.direction = direction;
-
-            console.log([this.x, this.y], 'coordinates')
-            //
-            console.log(map.isSpaceTaken(this.x, this.y, this.direction), 'space taken');
-
+    startBehavior(type, map, direction) {
+        this.direction = direction;
+        if (type === 'walk') {
+            if (map.isSpaceTaken(this.x, this.y, this.direction)) {
+                return
+            }
             this.movingProgressRemaining = 16;
         }
     }
 
-    updatePosition() {
+    update(direction, map) {
         if (this.movingProgressRemaining) {
-            //     y          -1
-            const [property, change] = this.directionUpdate[this.direction];
-            // x or y         1 or -1
-            this[property] += change;
-            this.movingProgressRemaining -= 1;
+            this.updatePosition();
+        } else {
+            if (this.isControlled && direction) {
+                this.startBehavior('walk', map, direction);
+            }
+            this.updateSprite(direction);
         }
     }
 
-    updateSprite(direction) {
-        if (this.movingProgressRemaining === 0 && !direction) {
-            this.sprite.setAnimation('idle-'+this.direction);
+    updatePosition() {
+        //     y          -1
+        const [property, change] = this.directionUpdate[this.direction];
+        // x or y         1 or -1
+        this[property] += change;
+        this.movingProgressRemaining -= 1;
+    }
+
+    updateSprite() {
+        if (this.movingProgressRemaining > 0) {
+            this.sprite.setAnimation('walk-'+this.direction);
             return;
         }
 
-        if (this.movingProgressRemaining > 0) {
-            this.sprite.setAnimation('walk-'+this.direction);
-        }
+        this.sprite.setAnimation('idle-'+this.direction);
     }
 }

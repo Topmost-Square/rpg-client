@@ -41,8 +41,6 @@ export class Environment {
 
             this.context && this.map.drawUpper(this.context, cameraPerson);
 
-            // this.context && this.map.drawUpper(this.context, cameraPerson);
-
             requestAnimationFrame(() => step())
         }
 
