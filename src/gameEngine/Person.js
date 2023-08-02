@@ -4,6 +4,7 @@ import {emitEvent} from "./utils";
 export class Person extends GameObject {
     movingProgressRemaining = 0;
     isControlled = false;
+    isStanding = false;
 
     directionUpdate = {
         'up': ['y', -1],
@@ -35,10 +36,12 @@ export class Person extends GameObject {
         }
 
         if (type === 'stand') {
+            this.isStanding = true;
             setTimeout(() => {
                 emitEvent('PersonStandComplete', {
                     whoId: this.id
                 });
+                this.isStanding = false;
             }, time);
         }
     }

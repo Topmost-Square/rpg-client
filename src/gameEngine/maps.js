@@ -173,7 +173,7 @@ export const FirstMap = {
         //objects
         [asGridCoordinate(17,11)]: true,
         [asGridCoordinate(18,11)]: true,
-        [asGridCoordinate(19,11)]: true,
+        // [asGridCoordinate(19,11)]: true, // house door
         [asGridCoordinate(20,11)]: true,
         [asGridCoordinate(21,11)]: true,
         [asGridCoordinate(22,11)]: true,

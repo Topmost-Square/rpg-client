@@ -20,8 +20,14 @@ export class GameMap {
             await eventHandler.init();
         }
 
-
         this.isCutscenePlaying = false;
+
+        //after cutscene is done we want to
+        // reset our npcs to act according their event scripts
+        Object.values(this.gameObjects).forEach(
+            object => object.doBehaviour(this)
+        )
+
     }
 
     setWalls(walls) {
