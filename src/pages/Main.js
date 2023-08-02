@@ -45,9 +45,9 @@ export const Game = () => {
     })
 
     return (
-        <div>
+        <div className='game-container'>
             <h1>GAME</h1>
-            <canvas ref={canvasRef}></canvas>
+            <canvas ref={canvasRef} width="352" height="198"></canvas>
         </div>
     );
 }
