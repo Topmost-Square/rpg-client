@@ -68,17 +68,18 @@ export class Environment {
         this.startGameLoop();
 
         this.map.startCutscene([
+            { who: "rickert", type: 'walk', direction: 'down'},
+            { who: "rickert", type: 'walk', direction: 'down'},
+            { who: "rickert", type: 'walk', direction: 'down'},
+            { who: "rickert", type: 'walk', direction: 'down'},
+            { who: "npc1", type: 'walk', direction: 'left'},
+            { who: "npc1", type: 'walk', direction: 'left'},
+            { who: "npc1", type: 'walk', direction: 'left'},
+            { who: "npc1", type: 'walk', direction: 'left'},
+            { who: "npc1", type: 'walk', direction: 'left'},
+            { who: "npc1", type: 'stand', direction: 'up', time: 200},
+
             { type: 'textMessage', text: 'Hello there!'}
-            // { who: "rickert", type: 'walk', direction: 'down'},
-            // { who: "rickert", type: 'walk', direction: 'down'},
-            // { who: "rickert", type: 'walk', direction: 'down'},
-            // { who: "rickert", type: 'walk', direction: 'down'},
-            // { who: "npc1", type: 'walk', direction: 'left'},
-            // { who: "npc1", type: 'walk', direction: 'left'},
-            // { who: "npc1", type: 'walk', direction: 'left'},
-            // { who: "npc1", type: 'walk', direction: 'left'},
-            // { who: "npc1", type: 'walk', direction: 'left'},
-            // { who: "npc1", type: 'stand', direction: 'up', time: 800},
         ])
     }
 }
