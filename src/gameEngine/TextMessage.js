@@ -1,4 +1,4 @@
-class TextMessage {
+export class TextMessage {
     text = '';
     onComplete = null;
     element = null;

@@ -1,3 +1,5 @@
+import {TextMessage} from "./TextMessage";
+
 export class EventHandler {
     map = null;
     event = null;
@@ -53,6 +55,13 @@ export class EventHandler {
         }
 
         document.addEventListener('PersonWalkingComplete', completeHandler)
+    }
+
+    textMessage(resolve) {
+        const message = new TextMessage();
+        message.setText(this.event.text);
+        message.setOnComplete(() => resolve());
+        message.init(document.querySelector('.game-container'));
     }
 
     init() {
