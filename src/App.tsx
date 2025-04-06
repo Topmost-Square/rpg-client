@@ -3,6 +3,7 @@ import './App.css';
 import { Player } from './gameEngine/Player';
 import { Position } from './gameEngine/Position';
 import { Controls } from './gameEngine/Controls';
+import { Map } from './gameEngine/Map';
 
 function App() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -13,6 +14,14 @@ function App() {
 
 	useEffect(() => {
 		if (canvasRef.current) {
+			canvasRef!.current!.width = window.innerWidth;
+			canvasRef!.current!.height = window.innerHeight;
+
+			addEventListener('resize', () => {
+				canvasRef!.current!.width = window.innerWidth;
+				canvasRef!.current!.height = window.innerHeight;
+			});
+
 			setCanvas(canvasRef.current);
 			setContext(canvasRef.current.getContext('2d'));
 
@@ -26,9 +35,16 @@ function App() {
 	player?.setContext(context);
 	player?.setControls(new Controls());
 
+	const map = new Map();
+	map.setCanvas(canvas);
+	map.setContext(context);
+
 	const animate = () => {
-		if (canvas && context && player) {
+		if (canvas && context && player && map) {
 			player.update();
+			context.clearRect(0, 0, canvas.width, canvas.height);
+
+			map.drawSimple();
 			player.draw();
 		}
 		requestAnimationFrame(animate);

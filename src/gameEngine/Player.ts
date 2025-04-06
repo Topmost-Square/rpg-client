@@ -19,9 +19,8 @@ export class Player extends Character implements Drawable, Updatable {
 		if (!this.ctx || !this.canvas) {
 			return;
 		}
-		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.ctx.fillStyle = 'red';
 
+		this.ctx.fillStyle = 'red';
 		this.ctx.fillRect(this.getPosition().x, this.getPosition().y, 20, 20);
 	}
 
