@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import { Player } from './gameEngine/Player';
 import { Position } from './gameEngine/Position';
+import { Controls } from './gameEngine/Controls';
 
 function App() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -11,7 +12,6 @@ function App() {
 	const [player, setPlayer] = useState<Player | null>(null);
 
 	useEffect(() => {
-		console.log({ canvasRef }, 'canvase ref changed');
 		if (canvasRef.current) {
 			setCanvas(canvasRef.current);
 			setContext(canvasRef.current.getContext('2d'));
@@ -24,6 +24,7 @@ function App() {
 	player?.setPosition(initPlayerPosition);
 	player?.setCanvas(canvas);
 	player?.setContext(context);
+	player?.setControls(new Controls());
 
 	const animate = () => {
 		if (canvas && context && player) {
