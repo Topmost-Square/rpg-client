@@ -5,6 +5,8 @@ export class Character {
 	position: Position = { x: 0, y: 0 };
 	controllable: boolean = false;
 	mapSize = { x: 0, y: 0 };
+	totalCells = { x: 0, y: 0 };
+	halfCanvas = { x: 0, y: 0 };
 
 	canvas: HTMLCanvasElement | null = null;
 	ctx: CanvasRenderingContext2D | null = null;
@@ -20,6 +22,15 @@ export class Character {
 
 	setCellSize(cellSize: number): void {
 		this.cellSize = cellSize;
+		this.totalCells = {
+			x: this.canvas ? this.canvas.width / this.cellSize : 0,
+			y: this.canvas ? this.canvas.height / this.cellSize : 0,
+		};
+
+		this.halfCanvas = {
+			x: this.canvas ? Math.ceil(this.canvas.width / 2 / this.cellSize) : 0,
+			y: this.canvas ? Math.floor(this.canvas.height / 2 / this.cellSize) : 0,
+		};
 	}
 
 	getPosition(): Position {
