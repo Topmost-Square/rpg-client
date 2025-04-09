@@ -1,5 +1,5 @@
 export class Map {
-	cellSize = 32;
+	cellSize = 1;
 
 	canvas: HTMLCanvasElement | null = null;
 	ctx: CanvasRenderingContext2D | null = null;
@@ -12,62 +12,55 @@ export class Map {
 		this.ctx = ctx;
 	}
 
-	map: Array<Array<number>> = [
-		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-		[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-		[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-		[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-		[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-		[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-		[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-		[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-		[0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-	];
+	map: Array<Array<number>> | null = null;
+
+	setMap(map: Array<Array<number>>) {
+		this.map = map;
+	}
+
+	setCellSize(cellSize: number) {
+		this.cellSize = cellSize;
+	}
 	drawBottomLayer() {}
 
 	drawTopLayer() {}
 
 	//remove it once real map can be rendered
-	drawSimple(): void {
-		if (!this.ctx || !this.canvas) {
+	drawSimple(rI: number = 0, cI: number = 0): void {
+		if (!this.ctx || !this.canvas || !this.map) {
 			return;
 		}
-		this.map.forEach((row, rowIndex) => {
-			row.forEach((cell, cellIndex) => {
-				if (cell === 0) {
-					this.ctx!.fillStyle = 'black';
-					this.ctx!.fillRect(
-						cellIndex * this.cellSize,
-						rowIndex * this.cellSize,
-						this.cellSize,
-						this.cellSize
-					);
-					this.ctx!.strokeStyle = 'white';
-					this.ctx!.strokeRect(
-						cellIndex * this.cellSize,
-						rowIndex * this.cellSize,
-						this.cellSize,
-						this.cellSize
-					);
-				}
-				if (cell === 1) {
-					this.ctx!.fillStyle = 'green';
-					this.ctx!.fillRect(
-						cellIndex * this.cellSize,
-						rowIndex * this.cellSize,
-						this.cellSize,
-						this.cellSize
-					);
-					this.ctx!.strokeStyle = 'grey';
-					this.ctx!.strokeRect(
-						cellIndex * this.cellSize,
-						rowIndex * this.cellSize,
-						this.cellSize,
-						this.cellSize
-					);
-				}
-			});
-		});
+
+		const maxRows = Math.min(
+			this.map.length,
+			rI + this.canvas.height / this.cellSize
+		);
+		const maxCols = Math.min(
+			this.map[0].length,
+			cI + this.canvas.width / this.cellSize
+		);
+
+		for (let rowIndex = Math.ceil(rI); rowIndex < maxRows; rowIndex++) {
+			for (let cellIndex = Math.ceil(cI); cellIndex < maxCols; cellIndex++) {
+				const color = this.map[rowIndex][cellIndex] === 1 ? 'green' : 'black';
+				const strokeColor =
+					this.map[rowIndex][cellIndex] === 1 ? 'grey' : 'white';
+
+				this.ctx!.fillStyle = color;
+				this.ctx!.fillRect(
+					(cellIndex - cI) * this.cellSize,
+					(rowIndex - rI) * this.cellSize,
+					this.cellSize,
+					this.cellSize
+				);
+				this.ctx!.strokeStyle = strokeColor;
+				this.ctx!.strokeRect(
+					(cellIndex - cI) * this.cellSize,
+					(rowIndex - rI) * this.cellSize,
+					this.cellSize,
+					this.cellSize
+				);
+			}
+		}
 	}
 }
