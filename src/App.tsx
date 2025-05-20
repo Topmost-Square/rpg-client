@@ -35,9 +35,33 @@ function App() {
 	// 10,7 multiplied by 40 - for now approx center of map
 	mainBaseBuilding.setPosition(new Position(10, 7));
 	mainBaseBuilding.setColor('blue');
+	mainBaseBuilding.setSize({ x: 2, y: 2 });
 	buildings.push(mainBaseBuilding);
 
-	game.setBuildings(buildings);
+	// create building placeholder
+	// todo: extract class for it
+
+	const bPlaceholders = [
+		{ x: 10, y: 5 },
+		{ x: 8, y: 5 },
+		{ x: 8, y: 7 },
+		{ x: 8, y: 9 },
+		{ x: 10, y: 9 },
+		{ x: 12, y: 9 },
+		{ x: 12, y: 7 },
+		{ x: 12, y: 5 },
+	];
+
+	const bPlaceholderObjects = bPlaceholders.map(placeholder =>
+		new Building()
+			.setPosition(new Position(placeholder.x, placeholder.y))
+			.setColor('grey')
+			.setSize({ x: 2, y: 2 })
+	);
+
+	const newBuildings = [...buildings, ...bPlaceholderObjects];
+
+	game.setBuildings(newBuildings);
 
 	const animate = () => {
 		if (canvas && context) {

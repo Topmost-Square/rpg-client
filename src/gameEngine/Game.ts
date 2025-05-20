@@ -46,14 +46,22 @@ export class Game {
 				this.ctx.fillRect(
 					building.position.x * 40,
 					building.position.y * 40,
-					40 * 2,
-					40 * 2
+					40 * building.size.x,
+					40 * building.size.y
+				);
+
+				this.ctx.strokeStyle = 'black';
+				this.ctx.strokeRect(
+					building.position.x * 40,
+					building.position.y * 40,
+					40 * building.size.x,
+					40 * building.size.y
 				);
 			}
 
 			// when b is pressed trying to put the building
 			if (this.controls?.controls.b) {
-				this.ctx.fillStyle = 'grey';
+				this.ctx.fillStyle = 'gray';
 				this.ctx.fillRect(
 					this.controls.controls.mouse.x,
 					this.controls.controls.mouse.y,
