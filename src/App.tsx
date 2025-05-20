@@ -1,17 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
-import { Player } from './gameEngine/Player';
-import { Position } from './gameEngine/Position';
-import { Controls } from './gameEngine/Controls';
-import { Map } from './gameEngine/Map';
-import TestMap from './config/maps/testMap';
 import { Game } from './gameEngine/Game';
+import { Building } from './gameEngine/buildings/Building';
+import { Position } from './gameEngine/Position';
 function App() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
 	const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
 	const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
-	const [player, setPlayer] = useState<Player | null>(null);
 
 	useEffect(() => {
 		if (canvasRef.current) {
@@ -25,40 +21,24 @@ function App() {
 
 			setCanvas(canvasRef.current);
 			setContext(canvasRef.current.getContext('2d'));
-
-			setPlayer(new Player());
 		}
 	}, []);
 
-	const { x, y } = TestMap.heroStart;
-	const { cellSize, map: testMap } = TestMap;
-	const mapSize = { x: testMap[0].length, y: testMap.length };
-	const initPlayerPosition = new Position(x, y);
-
-	player?.setPosition(initPlayerPosition);
-	player?.setCanvas(canvas);
-	player?.setContext(context);
-	player?.setControls(new Controls());
-	player?.setCellSize(cellSize);
-	player?.setMapSize(mapSize);
-	player?.setSpeed(2);
-
-	const map = new Map();
-	map.setCanvas(canvas);
-	map.setContext(context);
-	map.setMap(testMap);
-	map.setCellSize(cellSize);
-
 	const game = new Game();
-	game.setPlayer(player);
-	game.setMapSize(mapSize);
-	game.setMap(map);
 	game.setContext(context);
 	game.setCanvas(canvas);
-	game.setCellSize(cellSize);
+
+	const buildings: Building[] = [];
+	const mainBaseBuilding = new Building();
+	// 10,7 multiplied by 40 - for now approx center of map
+	mainBaseBuilding.setPosition(new Position(10, 7));
+	mainBaseBuilding.setColor('blue');
+	buildings.push(mainBaseBuilding);
+
+	game.setBuildings(buildings);
 
 	const animate = () => {
-		if (canvas && context && player && map) {
+		if (canvas && context) {
 			context.clearRect(0, 0, canvas.width, canvas.height);
 
 			game.run();

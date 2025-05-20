@@ -1,21 +1,9 @@
-import { Map } from './Map';
-import { Player } from './Player';
+import { Building } from './buildings/Building';
 
 export class Game {
-	player: Player | null = null;
-	map: Map | null = null;
-	mapSize: { x: number; y: number } | null = null;
 	canvas: HTMLCanvasElement | null = null;
 	ctx: CanvasRenderingContext2D | null = null;
-	cellSize = 0;
-
-	setPlayer(player: Player | null) {
-		this.player = player;
-	}
-
-	setMap(map: Map | null) {
-		this.map = map;
-	}
+	buildings: Building[] = [];
 
 	setCanvas(canvas: HTMLCanvasElement | null): void {
 		this.canvas = canvas;
@@ -25,68 +13,37 @@ export class Game {
 		this.ctx = ctx;
 	}
 
-	setMapSize(mapSize: { x: number; y: number }): void {
-		this.mapSize = mapSize;
-	}
-
-	halfCanvas = {
-		x: 0,
-		y: 0,
-	};
-
-	setCellSize(cellSize: number): void {
-		this.cellSize = cellSize;
-
-		this.halfCanvas = {
-			x: this.canvas ? Math.ceil(this.canvas.width / this.cellSize / 2) : 0,
-			y: this.canvas ? Math.floor(this.canvas.height / this.cellSize / 2) : 0,
-		};
-	}
-
-	getMapInitVals() {
-		if (!this.player || !this.canvas || !this.mapSize || !this.map) {
-			return { drawX: 0, drawY: 0 };
-		}
-
-		const { x, y } = this.player.getPosition();
-
-		let drawX = 0;
-		let drawY = 0;
-
-		if (x > this.halfCanvas.x) {
-			drawX = x - this.halfCanvas.x;
-		}
-
-		if (x >= this.mapSize.x - this.halfCanvas.x) {
-			drawX = Math.max(
-				0,
-				this.mapSize.x - Math.ceil(this.canvas.width / this.cellSize)
-			);
-		}
-
-		if (y > this.halfCanvas.y) {
-			drawY = y - this.halfCanvas.y;
-		}
-
-		if (y >= this.mapSize.y - this.halfCanvas.y) {
-			drawY = Math.max(
-				0,
-				this.mapSize.y - Math.floor(this.canvas.height / this.cellSize)
-			);
-		}
-
-		return { drawX, drawY };
+	setBuildings(buildings: Building[]): void {
+		this.buildings = buildings;
 	}
 
 	run() {
-		if (!this.player || !this.canvas || !this.mapSize || !this.map) {
+		if (!this.canvas || !this.ctx) {
 			return;
 		}
-		this.player.update();
 
-		const { drawX, drawY } = this.getMapInitVals();
+		for (let i = 0; i <= 20; i++) {
+			for (let j = 0; j <= 15; j++) {
+				this.ctx.fillStyle = 'black';
+				this.ctx.fillRect(i * 40, j * 40, 40, 40);
+				this.ctx.strokeStyle = 'grey';
+				this.ctx.strokeRect(i * 40, j * 40, 40, 40);
+			}
+		}
 
-		this.map.drawSimple(drawY, drawX);
-		this.player.draw();
+		for (let i = 0; i < this.buildings.length; i++) {
+			//draw base building
+
+			const building = this.buildings[i];
+			this.ctx.fillStyle = building.color || 'red';
+			if (building?.position) {
+				this.ctx.fillRect(
+					building.position.x * 40,
+					building.position.y * 40,
+					40,
+					40
+				);
+			}
+		}
 	}
 }
