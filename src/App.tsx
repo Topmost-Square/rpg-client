@@ -3,6 +3,7 @@ import './App.css';
 import { Game } from './gameEngine/Game';
 import { Building } from './gameEngine/buildings/Building';
 import { Position } from './gameEngine/Position';
+import { Controls } from './gameEngine/Controls';
 function App() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -27,6 +28,7 @@ function App() {
 	const game = new Game();
 	game.setContext(context);
 	game.setCanvas(canvas);
+	game.setControls(new Controls());
 
 	const buildings: Building[] = [];
 	const mainBaseBuilding = new Building();

@@ -1,32 +1,27 @@
 type ControlsType = {
-	up: boolean;
-	down: boolean;
-	left: boolean;
-	right: boolean;
+	b: boolean;
+	mouse: { x: number; y: number };
 };
 
-type KeysType = keyof ControlsType;
-
+//todo: we would need different types of controls for main screen
+// battle screen
+// hero screen etc
+// set it in app or game object upon scene(screen) switch
 export class Controls {
 	controls: ControlsType = {
-		up: false,
-		down: false,
-		left: false,
-		right: false,
+		b: false, // b is for building
+		mouse: { x: 0, y: 0 },
 	};
 
 	constructor() {
 		addEventListener('keydown', (e: KeyboardEvent) => {
-			const key = e.key.replace('Arrow', '').toLocaleLowerCase();
-			if (key in this.controls) {
-				this.controls[key as KeysType] = true;
+			if (e.key === 'b') {
+				this.controls.b = !this.controls.b;
 			}
 		});
-		addEventListener('keyup', (e: KeyboardEvent) => {
-			const key = e.key.replace('Arrow', '').toLocaleLowerCase();
-			if (key in this.controls) {
-				this.controls[key as KeysType] = false;
-			}
+
+		addEventListener('mousemove', (e: MouseEvent) => {
+			this.controls.mouse = { x: e.clientX, y: e.clientY };
 		});
 	}
 }
